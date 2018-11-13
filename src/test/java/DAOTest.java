@@ -45,4 +45,17 @@ public class DAOTest {
 		assertEquals(4, result.size());
 	}
 	
+        @Test
+	public void testAddDiscount() throws Exception {
+                myDAO.addDiscount_Code("C", (float) 1.25);
+                List<DiscountEntity> result = myDAO.ListOfDiscount();
+		assertEquals(myDAO.numberDiscount_Code(), result.size());
+	}
+        
+        @Test
+	public void testDeleteDiscount() throws Exception {
+                myDAO.deleteDiscount_Code("C");
+                List<DiscountEntity> result = myDAO.ListOfDiscount();
+		assertEquals(myDAO.numberDiscount_Code(), result.size());
+	}
 }

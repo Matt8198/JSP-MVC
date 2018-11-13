@@ -9,9 +9,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
@@ -86,6 +86,7 @@ public class DAO {
 			throw new Exception(ex.getMessage());
 		}
 	}
+        
         public List<DiscountEntity> ListOfDiscount() throws Exception {
 		List<DiscountEntity> result = new LinkedList<>(); // Liste vIde
 
@@ -110,6 +111,23 @@ public class DAO {
 
 	}
         
-       
+        public int numberDiscount_Code() throws Exception {
+                int result=0;
+		// Une requête SQL paramétrée
+		String sql = "SELECT COUNT(*) AS Number FROM APP.DISCOUNT_CODE";
+		try (Connection connection = myDataSource.getConnection();
+			Statement stmt = connection.createStatement();
+
+			ResultSet rs = stmt.executeQuery(sql) ){ 
+				if (rs.next()) { // Tant qu'il y a des enregistrements
+                                    result=rs.getInt("NUMBER");
+                                }
+			
+		}  catch (SQLException ex) {
+			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+			throw new Exception(ex.getMessage());
+		}
+                return result;
+        }
         
 }
